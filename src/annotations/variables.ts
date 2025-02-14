@@ -36,3 +36,9 @@ const logNumber = (i: number): void => {
 };
 
 logNumber(12);
+
+const agMembers = ['Suzuka', 'Rin', 'Kanon', 'Mizyu'];
+
+agMembers.forEach(element => {
+    console.log(element);
+});

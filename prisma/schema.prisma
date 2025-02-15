@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Drama {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String   @unique
+  year         Int
+  rating       Float?
+  actorIDs     String[] @db.ObjectId
+  cast         Actor[]  @relation(fields: [actorIDs], references: [id])
+  personIDs    String[] @db.ObjectId
+  staff        Person[] @relation(fields: [personIDs], references: [id])
+  thumbnailURL String?
+  description  String?
+  createdOn    DateTime @default(now())
+  modifiedOn   DateTime @default(now())
+  deleted      Boolean  @default(false)
+}
+
+model Actor {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String?
+  lastName     String
+  dramaIDs     String[] @db.ObjectId
+  dramas       Drama[]  @relation(fields: [dramaIDs], references: [id])
+  thumbnailURL String?
+  createdOn    DateTime @default(now())
+  modifiedOn   DateTime @default(now())
+  deleted      Boolean  @default(false)
+}
+
+model Person {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String?
+  lastName     String
+  dramaIDs     String[] @db.ObjectId
+  dramas       Drama[]  @relation(fields: [dramaIDs], references: [id])
+  thumbnailURL String?
+  createdOn    DateTime @default(now())
+  modifiedOn   DateTime @default(now())
+  deleted      Boolean  @default(false)
+}

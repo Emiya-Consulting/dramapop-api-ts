@@ -1,7 +1,7 @@
 import {Router, Request, Response} from 'express';
 import Drama from '../models/Drama';
 
-const r = Router();
+const router = Router();
 
 const dramas: Drama[] = [
   {
@@ -25,12 +25,12 @@ const dramas: Drama[] = [
 ];
 
 // Get all dramas
-r.get('/dramas', (req: Request, res: Response) => {
+router.get('/dramas', (req: Request, res: Response) => {
   res.json(dramas);
 });
 
 // Get a drama by id
-r.get('/dramas/:id', (req: Request, res: Response) => {
+router.get('/dramas/:id', (req: Request, res: Response) => {
   const dramaID = parseInt(req.params.id);
   const drama = dramas.find(d => d.id === dramaID);
   if (drama) {
@@ -41,7 +41,7 @@ r.get('/dramas/:id', (req: Request, res: Response) => {
 });
 
 // Create a new drama
-r.post('/dramas', (req: Request, res: Response) => {
+router.post('/dramas', (req: Request, res: Response) => {
   const newDrama: Drama = {
     id: dramas.length + 100000,
     title: req.body.title,
@@ -55,4 +55,4 @@ r.post('/dramas', (req: Request, res: Response) => {
   res.status(201).json(newDrama);
 });
 
-export default r;
+export default router;

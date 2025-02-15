@@ -16,6 +16,7 @@
         "posttest": "npm run lint"
     },
     "dependencies": {
-        "express": "^4.21.2"
+        "express": "^4.21.2",
+        "mongodb": "^6.13.0"
     }
 }

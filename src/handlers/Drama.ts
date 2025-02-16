@@ -35,21 +35,19 @@ export async function getDramas(req: Request, res: Response) {
 // METHOD: Get
 export async function getDrama(req: Request, res: Response) {
   try {
-    const {id: dramaid} = req.params;
-    const drama = await prisma.drama.findFirst({where: {id: dramaid}});
-
-    console.log(dramaid);
+    const {id} = req.params;
+    const drama = await prisma.drama.findFirst({where: {id}});
 
     if (!drama) {
       res.status(404).json({
         status: false,
-        message: `There is no drama with the id ${dramaid}`,
+        message: `There is no drama with the id ${id}`,
       });
     }
 
     res.status(200).json({
       status: true,
-      message: `Drama with id ${dramaid} successfully fetched`,
+      message: `Drama with id ${id} successfully fetched`,
       data: drama,
     });
   } catch (e) {
@@ -89,29 +87,51 @@ export async function createDrama(req: Request, res: Response) {
 // METHOD: Patch
 export async function updateDrama(req: Request, res: Response) {
   try {
-    const {id: dramaid} = req.params;
+    const {id} = req.params;
+    const {
+      title,
+      year,
+      rating,
+      actorIDs,
+      personIDs,
+      thumbnailURL,
+      description,
+      createdOn,
+      deleted,
+    } = req.body;
 
-    const drama = await prisma.drama.findFirst({where: {id: dramaid}});
+    const drama = await prisma.drama.findFirst({where: {id}});
 
     if (!drama) {
       res.status(404).json({
         status: false,
-        message: `There is no drama with the id ${dramaid}`,
+        message: `There is no drama with the id ${id}`,
+      });
+    } else {
+      const updatedDrama = await prisma.drama.update({
+        where: {
+          id,
+        },
+        data: {
+          title,
+          year,
+          rating,
+          actorIDs,
+          personIDs,
+          thumbnailURL,
+          description,
+          createdOn,
+          modifiedOn: (drama.modifiedOn = new Date()),
+          deleted,
+        },
+      });
+
+      res.status(200).json({
+        status: true,
+        message: `Drama with id ${id} successfully updated`,
+        data: updatedDrama,
       });
     }
-
-    const updatedDrama = await prisma.drama.update({
-      where: {
-        id: dramaid,
-      },
-      data: req.body,
-    });
-
-    res.status(200).json({
-      status: true,
-      message: `Drama with id ${dramaid} successfully updated`,
-      data: updatedDrama,
-    });
   } catch (e) {
     console.error(e);
     res.status(500).json({
@@ -126,26 +146,29 @@ export async function updateDrama(req: Request, res: Response) {
 // METHOD: Delete
 export async function deleteDrama(req: Request, res: Response) {
   try {
-    const {id: dramaid} = req.params;
+    const {id} = req.params;
 
-    const drama = await prisma.drama.findFirst({where: {id: dramaid}});
+    const drama = await prisma.drama.findFirst({where: {id}});
 
     if (!drama) {
       res.status(404).json({
         status: false,
-        message: `There is no drama with the id ${dramaid}`,
+        message: `There is no drama with the id ${id}`,
       });
     } else {
       const deletedDrama = await prisma.drama.update({
         where: {
-          id: dramaid,
+          id,
         },
-        data: (drama.deleted = true),
+        data: {
+          deleted: (drama.deleted = true),
+          modifiedOn: (drama.modifiedOn = new Date()),
+        },
       });
 
       res.status(200).json({
         status: true,
-        message: `Drama with the id ${dramaid} successfully marked as deleted`,
+        message: `Drama with the id ${id} successfully marked as deleted`,
         data: deletedDrama,
       });
     }

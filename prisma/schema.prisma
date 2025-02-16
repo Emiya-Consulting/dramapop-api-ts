@@ -25,7 +25,7 @@ model Drama {
   thumbnailURL String?
   description  String?
   createdOn    DateTime @default(now())
-  modifiedOn   DateTime @default(now())
+  modifiedOn   DateTime @updatedAt
   deleted      Boolean  @default(false)
 }
 
@@ -37,7 +37,7 @@ model Actor {
   dramas       Drama[]  @relation(fields: [dramaIDs], references: [id])
   thumbnailURL String?
   createdOn    DateTime @default(now())
-  modifiedOn   DateTime @default(now())
+  modifiedOn   DateTime @updatedAt
   deleted      Boolean  @default(false)
 }
 
@@ -49,6 +49,6 @@ model Person {
   dramas       Drama[]  @relation(fields: [dramaIDs], references: [id])
   thumbnailURL String?
   createdOn    DateTime @default(now())
-  modifiedOn   DateTime @default(now())
+  modifiedOn   DateTime @updatedAt
   deleted      Boolean  @default(false)
 }

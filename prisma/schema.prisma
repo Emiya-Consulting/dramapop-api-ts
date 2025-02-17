@@ -14,19 +14,28 @@ datasource db {
 }
 
 model Drama {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  title        String   @unique
-  year         Int
-  rating       Float?
-  actorIDs     String[] @db.ObjectId
-  cast         Actor[]  @relation(fields: [actorIDs], references: [id])
-  personIDs    String[] @db.ObjectId
-  staff        Person[] @relation(fields: [personIDs], references: [id])
-  thumbnailURL String?
-  description  String?
-  createdOn    DateTime @default(now())
-  modifiedOn   DateTime @updatedAt
-  deleted      Boolean  @default(false)
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  title           String   @unique
+  year            Int
+  averageRating   Float?
+  actorIDs        String[] @db.ObjectId
+  cast            Actor[]  @relation(fields: [actorIDs], references: [id])
+  personIDs       String[] @db.ObjectId
+  staff           Person[] @relation(fields: [personIDs], references: [id])
+  userIDs         String[] @db.ObjectId
+  users           User[]   @relation(fields: [userIDs], references: [id])
+  tagIDs          String[] @db.ObjectId
+  tags            Tag[]    @relation(fields: [tagIDs], references: [id])
+  genres          Genre[]  @relation(fields: [genreIDs], references: [id])
+  genreIDs        String[] @db.ObjectId
+  thumbnailURL    String?
+  description     String?
+  countryOfOrigin String?
+  seasons         Int?
+  episodes        Int?
+  createdOn       DateTime @default(now())
+  modifiedOn      DateTime @updatedAt
+  deleted         Boolean  @default(false)
 }
 
 model Actor {
@@ -51,4 +60,48 @@ model Person {
   createdOn    DateTime @default(now())
   modifiedOn   DateTime @updatedAt
   deleted      Boolean  @default(false)
+}
+
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName    String?
+  lastName     String
+  userName     String
+  email        String   @unique
+  dramaIDs     String[] @db.ObjectId
+  dramas       Drama[]  @relation(fields: [dramaIDs], references: [id])
+  thumbnailURL String?
+  createdOn    DateTime @default(now())
+  modifiedOn   DateTime @updatedAt
+  deleted      Boolean  @default(false)
+}
+
+model UserRating {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  dramaID    String   @db.ObjectId
+  userID     String   @db.ObjectId
+  rating     Float
+  createdOn  DateTime @default(now())
+  modifiedOn DateTime @updatedAt
+  deleted    Boolean  @default(false)
+}
+
+model Tag {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  dramaIDs   String[] @db.ObjectId
+  dramas     Drama[]  @relation(fields: [dramaIDs], references: [id])
+  createdOn  DateTime @default(now())
+  modifiedOn DateTime @updatedAt
+  deleted    Boolean  @default(false)
+}
+
+model Genre {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  dramaIDs   String[] @db.ObjectId
+  dramas     Drama[]  @relation(fields: [dramaIDs], references: [id])
+  createdOn  DateTime @default(now())
+  modifiedOn DateTime @updatedAt
+  deleted    Boolean  @default(false)
 }

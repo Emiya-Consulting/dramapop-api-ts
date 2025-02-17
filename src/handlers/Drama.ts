@@ -91,7 +91,6 @@ export async function updateDrama(req: Request, res: Response) {
     const {
       title,
       year,
-      rating,
       actorIDs,
       personIDs,
       thumbnailURL,
@@ -115,7 +114,6 @@ export async function updateDrama(req: Request, res: Response) {
         data: {
           title,
           year,
-          rating,
           actorIDs,
           personIDs,
           thumbnailURL,

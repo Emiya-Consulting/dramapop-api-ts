@@ -88,16 +88,6 @@ export async function createDrama(req: Request, res: Response) {
 export async function updateDrama(req: Request, res: Response) {
   try {
     const {id} = req.params;
-    const {
-      title,
-      year,
-      actorIDs,
-      personIDs,
-      thumbnailURL,
-      description,
-      createdOn,
-      deleted,
-    } = req.body;
 
     const drama = await prisma.drama.findFirst({where: {id}});
 
@@ -111,17 +101,7 @@ export async function updateDrama(req: Request, res: Response) {
         where: {
           id,
         },
-        data: {
-          title,
-          year,
-          actorIDs,
-          personIDs,
-          thumbnailURL,
-          description,
-          createdOn,
-          modifiedOn: (drama.modifiedOn = new Date()),
-          deleted,
-        },
+        data: {modifiedOn: (drama.modifiedOn = new Date()), ...req.body},
       });
 
       res.status(200).json({

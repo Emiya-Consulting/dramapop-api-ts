@@ -3,7 +3,9 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "config/db.ts"]
+  "include": ["src/**/*.ts", "test/**/*.ts", "config/db.ts", "learning/**/*.ts"]
 }

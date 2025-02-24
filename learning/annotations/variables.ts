@@ -8,31 +8,31 @@ console.log(now);
 
 const bandMembers = ['Jisoo', 'Lisa', 'Jennie', 'Rosé'];
 for (let i = 0; i < bandMembers.length; i++) {
-    console.log(bandMembers[i]);
+  console.log(bandMembers[i]);
 }
 
 class Car {
-    make = '';
-    model = '';
+  make = '';
+  model = '';
 
-    constructor(make: string, model: string) {
-        this.make = make;
-        this.model = model;
-    }
+  constructor(make: string, model: string) {
+    this.make = make;
+    this.model = model;
+  }
 }
 
 const car: Car = new Car('Hyundai', 'Tucson');
 console.log(car);
 
 const point: {x: number; y: number} = {
-    x: 10,
-    y: 20,
+  x: 10,
+  y: 20,
 };
 
 console.log(point);
 
 const logNumber = (i: number): void => {
-    console.log(i);
+  console.log(i);
 };
 
 logNumber(12);
@@ -40,5 +40,5 @@ logNumber(12);
 const agMembers = ['Suzuka', 'Rin', 'Kanon', 'Mizyu'];
 
 agMembers.forEach(element => {
-    console.log(element);
+  console.log(element);
 });

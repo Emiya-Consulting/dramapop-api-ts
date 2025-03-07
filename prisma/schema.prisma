@@ -14,19 +14,24 @@ datasource db {
 }
 
 model Drama {
-  id              Int      @id @default(autoincrement())
-  title           String   @unique
+  id              Int            @id @default(autoincrement())
+  title           String
   year            Int
   averageRating   Float?
   cast            Actor[]
+  staff           People[]
   thumbnailURL    String?
   description     String?
-  countryOfOrigin String?
   seasons         Int?
   episodes        Int?
-  createdOn       DateTime @default(now())
-  modifiedOn      DateTime @updatedAt
-  deleted         Boolean  @default(false)
+  tags            Tag[]
+  createdOn       DateTime       @default(now())
+  modifiedOn      DateTime       @updatedAt
+  deleted         Boolean        @default(false)
+  genre           Genre?         @relation(fields: [genreId], references: [id])
+  genreId         Int?
+  originCountry   OriginCountry? @relation(fields: [originCountryId], references: [id])
+  originCountryId Int?
 }
 
 model Actor {
@@ -38,4 +43,42 @@ model Actor {
   createdOn    DateTime @default(now())
   modifiedOn   DateTime @updatedAt
   deleted      Boolean  @default(false)
+}
+
+model Genre {
+  id         Int      @id @default(autoincrement())
+  title      String   @unique
+  dramas     Drama[]
+  createdOn  DateTime @default(now())
+  modifiedOn DateTime @updatedAt
+  deleted    Boolean  @default(false)
+}
+
+model Tag {
+  id         Int      @id @default(autoincrement())
+  title      String   @unique
+  dramas     Drama[]
+  createdOn  DateTime @default(now())
+  modifiedOn DateTime @updatedAt
+  deleted    Boolean  @default(false)
+}
+
+model People {
+  id           Int      @id @default(autoincrement())
+  firstName    String?
+  lastName     String
+  dramas       Drama[]
+  thumbnailURL String?
+  createdOn    DateTime @default(now())
+  modifiedOn   DateTime @updatedAt
+  deleted      Boolean  @default(false)
+}
+
+model OriginCountry {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique
+  dramas     Drama[]
+  createdOn  DateTime @default(now())
+  modifiedOn DateTime @updatedAt
+  deleted    Boolean  @default(false)
 }

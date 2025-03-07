@@ -35,7 +35,7 @@ export async function getDramas(req: Request, res: Response) {
 // METHOD: Get
 export async function getDrama(req: Request, res: Response) {
   try {
-    const {id} = req.params;
+    const id = parseInt(req.params.id);
     const drama = await prisma.drama.findFirst({where: {id}});
 
     if (!drama) {
@@ -87,7 +87,7 @@ export async function createDrama(req: Request, res: Response) {
 // METHOD: Patch
 export async function updateDrama(req: Request, res: Response) {
   try {
-    const {id} = req.params;
+    const id = parseInt(req.params.id);
 
     const drama = await prisma.drama.findFirst({where: {id}});
 
@@ -124,7 +124,7 @@ export async function updateDrama(req: Request, res: Response) {
 // METHOD: Delete
 export async function deleteDrama(req: Request, res: Response) {
   try {
-    const {id} = req.params;
+    const id = parseInt(req.params.id);
 
     const drama = await prisma.drama.findFirst({where: {id}});
 

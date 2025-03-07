@@ -35,7 +35,7 @@ export async function getActors(req: Request, res: Response) {
 // METHOD: Get
 export async function getActor(req: Request, res: Response) {
   try {
-    const {id} = req.params;
+    const id = parseInt(req.params.id);
     const actor = await prisma.actor.findFirst({where: {id}});
 
     if (!actor) {
@@ -87,9 +87,8 @@ export async function createActor(req: Request, res: Response) {
 // METHOD: Patch
 export async function updateActor(req: Request, res: Response) {
   try {
-    const {id} = req.params;
-    const {firstName, lastName, dramaIDs, thumbnailURL, createdOn, deleted} =
-      req.body;
+    const id = parseInt(req.params.id);
+    const {firstName, lastName, thumbnailURL, createdOn, deleted} = req.body;
 
     const actor = await prisma.actor.findFirst({where: {id}});
 
@@ -106,7 +105,6 @@ export async function updateActor(req: Request, res: Response) {
         data: {
           firstName,
           lastName,
-          dramaIDs,
           thumbnailURL,
           createdOn,
           modifiedOn: (actor.modifiedOn = new Date()),
@@ -134,7 +132,7 @@ export async function updateActor(req: Request, res: Response) {
 // METHOD: Delete
 export async function deleteActor(req: Request, res: Response) {
   try {
-    const {id} = req.params;
+    const id = parseInt(req.params.id);
 
     const actor = await prisma.actor.findFirst({where: {id}});
 

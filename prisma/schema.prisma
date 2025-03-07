@@ -14,8 +14,8 @@ datasource db {
 }
 
 model Drama {
-  id              Int              @id @default(autoincrement())
-  title           String           @unique
+  id              Int      @id @default(autoincrement())
+  title           String   @unique
   year            Int
   averageRating   Float?
   cast            Actor[]
@@ -24,31 +24,18 @@ model Drama {
   countryOfOrigin String?
   seasons         Int?
   episodes        Int?
-  createdOn       DateTime         @default(now())
-  modifiedOn      DateTime         @updatedAt
-  deleted         Boolean          @default(false)
-  ActorsInDramas  ActorsInDramas[]
+  createdOn       DateTime @default(now())
+  modifiedOn      DateTime @updatedAt
+  deleted         Boolean  @default(false)
 }
 
 model Actor {
-  id             Int              @id @default(autoincrement())
-  firstName      String?
-  lastName       String
-  dramas         Drama[]
-  thumbnailURL   String?
-  createdOn      DateTime         @default(now())
-  modifiedOn     DateTime         @updatedAt
-  deleted        Boolean          @default(false)
-  ActorsInDramas ActorsInDramas[]
-}
-
-model ActorsInDramas {
-  drama      Drama    @relation(fields: [dramaID], references: [id])
-  dramaID    Int
-  actor      Actor    @relation(fields: [actorID], references: [id])
-  actorID    Int
-  createdOn  DateTime @default(now())
-  modifiedOn DateTime @updatedAt
-
-  @@id([dramaID, actorID])
+  id           Int      @id @default(autoincrement())
+  firstName    String?
+  lastName     String
+  dramas       Drama[]
+  thumbnailURL String?
+  createdOn    DateTime @default(now())
+  modifiedOn   DateTime @updatedAt
+  deleted      Boolean  @default(false)
 }

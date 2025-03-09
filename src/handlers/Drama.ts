@@ -128,7 +128,7 @@ export async function updateDrama(req: Request, res: Response) {
           description: req.body.description,
           seasons: req.body.seasons,
           episodes: req.body.episodes,
-          modifiedOn: (drama.modifiedOn = new Date()),
+          modifiedOn: new Date(),
           genreId: req.body.genreId,
           originCountryId: req.body.originCountryId,
           cast: {

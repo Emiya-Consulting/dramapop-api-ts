@@ -21,7 +21,7 @@ model Drama {
   cast            Actor[]
   staff           People[]
   thumbnailURL    String?
-  description     String?
+  description     String?        @db.VarChar(500)
   seasons         Int?
   episodes        Int?
   tags            Tag[]

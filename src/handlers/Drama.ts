@@ -1,5 +1,6 @@
 import {Request, Response} from 'express';
 import prisma from '../client';
+import {Drama} from '@prisma/client';
 
 // Get all dramas
 // ROUTE: '/api/v1/dramas'
@@ -64,8 +65,27 @@ export async function getDrama(req: Request, res: Response) {
 // METHOD: Post
 export async function createDrama(req: Request, res: Response) {
   try {
-    const drama = await prisma.drama.create({
-      data: req.body,
+    const drama: Drama = await prisma.drama.create({
+      data: {
+        title: req.body.title,
+        year: req.body.year,
+        thumbnailURL: req.body.thumbnailURL,
+        description: req.body.description,
+        seasons: req.body.seasons,
+        episodes: req.body.episodes,
+        modifiedOn: new Date(),
+        genreId: req.body.genreId,
+        originCountryId: req.body.originCountryId,
+        cast: {
+          connect: {id: req.body.actorId},
+        },
+        staff: {
+          connect: {id: req.body.personId},
+        },
+        tags: {
+          connect: {id: req.body.tagId},
+        },
+      },
     });
 
     res.status(201).json({
@@ -101,7 +121,26 @@ export async function updateDrama(req: Request, res: Response) {
         where: {
           id,
         },
-        data: {modifiedOn: (drama.modifiedOn = new Date()), ...req.body},
+        data: {
+          title: req.body.title,
+          year: req.body.year,
+          thumbnailURL: req.body.thumbnailURL,
+          description: req.body.description,
+          seasons: req.body.seasons,
+          episodes: req.body.episodes,
+          modifiedOn: (drama.modifiedOn = new Date()),
+          genreId: req.body.genreId,
+          originCountryId: req.body.originCountryId,
+          cast: {
+            connect: {id: req.body.actorId},
+          },
+          staff: {
+            connect: {id: req.body.personId},
+          },
+          tags: {
+            connect: {id: req.body.tagId},
+          },
+        },
       });
 
       res.status(200).json({

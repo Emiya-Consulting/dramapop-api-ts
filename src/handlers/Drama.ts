@@ -102,7 +102,7 @@ export async function createDrama(req: Request, res: Response) {
   }
 }
 
-// Update a drama using the drama's id
+// Update a drama using the drama's id updating only fields that are included in the request
 // ROUTE: '/api/v1/dramas/:id'
 // METHOD: Patch
 export async function updateDrama(req: Request, res: Response) {

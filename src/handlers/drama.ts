@@ -76,15 +76,6 @@ export async function createDrama(req: Request, res: Response) {
         modifiedOn: new Date(),
         genreId: req.body.genreId,
         originCountryId: req.body.originCountryId,
-        cast: {
-          connect: {id: req.body.actorId},
-        },
-        staff: {
-          connect: {id: req.body.personId},
-        },
-        tags: {
-          connect: {id: req.body.tagId},
-        },
       },
     });
 
